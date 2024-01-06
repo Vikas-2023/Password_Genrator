@@ -20,13 +20,13 @@ setInicator("#ccc");
 function handleSlider() {
     inputSlider.value = passwordLength;
     lengthDisplay.innerText = passwordLength;
-    
+
 }
 
 function setInicator(color) {
     indicater.style.backgroundColor = color;
     //shadow
-    indicater.style.boxShadow=  `1px 1px 4px 5px  ${color}` ;
+    indicater.style.boxShadow = `1px 1px 4px 5px  ${color}`;
 }
 
 function getRandomInteger(min, max) {
@@ -83,36 +83,36 @@ async function copyContent() {
     //to make copy wala span visible
     copyMsg.classList.add("active");
 
-    setTimeout(()=>{
+    setTimeout(() => {
         copyMsg.classList.remove("active");
-    },2000);
+    }, 2000);
 }
-function handleCheckBoxChange(){
-    checkCount=0;
-    allCheckBox.forEach((checkbox)=>{
-        if(checkbox.checked)
-        checkCount++;
+function handleCheckBoxChange() {
+    checkCount = 0;
+    allCheckBox.forEach((checkbox) => {
+        if (checkbox.checked)
+            checkCount++;
     });
 
     //Special Condition
-    if(passwordLength<checkCount){
-        passwordLength=checkCount;
+    if (passwordLength < checkCount) {
+        passwordLength = checkCount;
         handleSlider();
     }
 }
 
-allCheckBox.forEach((checkbox)=>{
-    checkbox.addEventListener('change',handleCheckBoxChange);
+allCheckBox.forEach((checkbox) => {
+    checkbox.addEventListener('change', handleCheckBoxChange);
 })
 
-inputSlider.addEventListener('input',(e)=>{
-    passwordLength=e.target.value;
+inputSlider.addEventListener('input', (e) => {
+    passwordLength = e.target.value;
     handleSlider();
 })
 
-copyBtn.addEventListener('click',()=>{
-    if(passwordDisplay.value)
-    copyContent();
+copyBtn.addEventListener('click', () => {
+    if (passwordDisplay.value)
+        copyContent();
 })
 
 function shufflePassword(array) {
@@ -122,7 +122,7 @@ function shufflePassword(array) {
         const temp = array[i];
         array[i] = array[j];
         array[j] = temp;
-      }
+    }
     let str = "";
     array.forEach((el) => (str += el));
     return str;
@@ -132,10 +132,10 @@ function shufflePassword(array) {
 genrateBtn.addEventListener('click', () => {
     //none of the checkbox are selected
 
-    if(checkCount == 0) 
+    if (checkCount == 0)
         return;
 
-    if(passwordLength < checkCount) {
+    if (passwordLength < checkCount) {
         passwordLength = checkCount;
         handleSlider();
     }
@@ -145,47 +145,31 @@ genrateBtn.addEventListener('click', () => {
     //remove old password
     password = "";
 
-    //let's put the stuff mentioned by checkboxes
-
-    // if(uppercaseCheck.checked) {
-    //     password += generateUpperCase();
-    // }
-
-    // if(lowercaseCheck.checked) {
-    //     password += generateLowerCase();
-    // }
-
-    // if(numbersCheck.checked) {
-    //     password += generateRandomNumber();
-    // }
-
-    // if(symbolsCheck.checked) {
-    //     password += generateSymbol();
-    // }
+   
 
     let funcArr = [];
 
-    if(uppercaseCheck.checked)
+    if (uppercaseCheck.checked)
         funcArr.push(genrateUpperCase);
 
-    if(lowercaseCheck.checked)
+    if (lowercaseCheck.checked)
         funcArr.push(genrateLowerCase);
 
-    if(numberCheck.checked)
+    if (numberCheck.checked)
         funcArr.push(genrateRandomNumber);
 
-    if(symbolsCheck.checked)
+    if (symbolsCheck.checked)
         funcArr.push(genrateSymbol);
 
     //compulsory addition
-    for(let i=0; i<funcArr.length; i++) {
+    for (let i = 0; i < funcArr.length; i++) {
         password += funcArr[i]();
     }
     console.log("COmpulsory adddition done");
 
     //remaining adddition
-    for(let i=0; i<passwordLength-funcArr.length; i++) {
-        let randIndex = getRandomInteger(0 , funcArr.length);
+    for (let i = 0; i < passwordLength - funcArr.length; i++) {
+        let randIndex = getRandomInteger(0, funcArr.length);
         console.log("randIndex" + randIndex);
         password += funcArr[randIndex]();
     }
